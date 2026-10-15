@@ -42,13 +42,31 @@ export function DocumentItem({ formCtx, index, onRemove }: DocumentItemProps) {
 
   const [showCustomDetails, setShowCustomDetails] = useState(hasCustomValues)
 
+  const handleGenerateIrn = () => {
+    const mockIrn = 'IRN' + Math.random().toString(36).substring(2, 10).toUpperCase()
+    formCtx.hooks.setValue(`${basePath}.imageReferenceNumber`, mockIrn, { shouldValidate: true })
+  }
+
   return (
-    <div className="space-y-3 rounded-lg border border-gray-200 bg-white p-3">
+    <div className="space-y-3 rounded-xl border border-gray-200 bg-white p-4 shadow-2xs dark:border-gray-800 dark:bg-gray-950">
       <div className="mb-1 flex items-center justify-between">
-        <h3 className="text-sm font-semibold text-gray-900">Document {index + 1}</h3>
-        <Button size="sm" variant="ghost" className="h-7 px-2 text-xs" onClick={onRemove}>
-          Remove
-        </Button>
+        <div className="flex items-center gap-2">
+          <span className="flex size-6 items-center justify-center rounded-md bg-gray-100 text-xs dark:bg-gray-800">
+            📄
+          </span>
+          <h3 className="text-sm font-bold text-gray-950 dark:text-white">e-Sanchit Document {index + 1}</h3>
+        </div>
+        <div className="flex items-center gap-2">
+          <button
+            type="button"
+            onClick={handleGenerateIrn}
+            className="rounded-md border border-gray-200 bg-gray-50 px-2 py-1 text-[11px] font-medium text-gray-700 hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300">
+            ⚡ Generate IRN
+          </button>
+          <Button size="sm" variant="ghost" className="h-7 px-2 text-xs text-red-600 hover:bg-red-50 hover:text-red-700 dark:hover:bg-red-950/50" onClick={onRemove}>
+            Remove
+          </Button>
+        </div>
       </div>
 
       <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">

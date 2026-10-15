@@ -14,10 +14,10 @@ export function PackingRangeItem({ formCtx, index, onRemove }: PackingRangeItemP
   const basePath = `packingRanges.${index}` as const
 
   return (
-    <div className="rounded-lg border border-gray-200 p-3">
+    <div className="rounded-xl border border-gray-200 bg-white p-4 shadow-2xs dark:border-gray-800 dark:bg-gray-950">
       <div className="mb-3 flex items-center justify-between">
-        <span className="text-sm font-medium">Range {index + 1}</span>
-        <Button size="sm" variant="ghost" onClick={onRemove}>
+        <span className="text-sm font-bold text-gray-950 dark:text-white">Carton Range {index + 1}</span>
+        <Button size="sm" variant="ghost" className="h-7 px-2 text-xs text-red-600 hover:bg-red-50 hover:text-red-700 dark:hover:bg-red-950/50" onClick={onRemove}>
           Remove
         </Button>
       </div>

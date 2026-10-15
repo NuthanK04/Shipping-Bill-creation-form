@@ -331,10 +331,15 @@ export function InvoiceEditor({
         </div>
 
         {/* Goods items */}
-        <div className="border-t border-gray-200 pt-5">
+        <div className="border-t border-gray-200 pt-5 dark:border-gray-800">
           <div className="mb-3 flex flex-wrap items-center justify-between gap-2">
-            <SectionHeading title="Goods" />
-            <Button size="sm" variant="outline" onClick={() => addItem(emptyItem())}>
+            <div className="flex items-center gap-2">
+              <SectionHeading title="Goods line items" />
+              <span className="rounded-full bg-gray-100 px-2 py-0.5 text-xs font-semibold text-gray-700 dark:bg-gray-800 dark:text-gray-300">
+                {items.length} {items.length === 1 ? 'item' : 'items'}
+              </span>
+            </div>
+            <Button size="sm" variant="outline" className="text-xs" onClick={() => addItem(emptyItem())}>
               + Add item
             </Button>
           </div>
@@ -352,6 +357,7 @@ export function InvoiceEditor({
                   currency={invoice.currency}
                   canRemove={items.length > 1}
                   onRemove={() => removeItem(itemIndex)}
+                  onDuplicate={() => addItem({ ...item })}
                   onQuickAdd={onQuickAdd}
                   onAddBranch={onAddBranch}
                 />
@@ -360,9 +366,41 @@ export function InvoiceEditor({
           </div>
         </div>
 
-        <div className="text-right text-sm font-semibold">
-          Invoice total: {invoice.currency}{' '}
-          {invoiceTotal(invoice).toLocaleString(undefined, { maximumFractionDigits: 2 })}
+        {/* Dynamic Financial Summary Card */}
+        <div className="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-gray-200 bg-gray-50/70 p-4 text-xs dark:border-gray-800 dark:bg-gray-950">
+          <div className="flex flex-wrap items-center gap-4 text-gray-500 dark:text-gray-400">
+            <div>
+              <span className="block text-[10px] uppercase font-semibold text-gray-400">Items Subtotal</span>
+              <span className="font-mono font-medium text-gray-800 dark:text-gray-200">
+                {invoice.currency} {invoiceTotal(invoice).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+              </span>
+            </div>
+            {invoiceValues.freightAmount && (
+              <div>
+                <span className="block text-[10px] uppercase font-semibold text-gray-400">Freight</span>
+                <span className="font-mono font-medium text-gray-800 dark:text-gray-200">
+                  +{invoice.currency} {Number(invoiceValues.freightAmount).toFixed(2)}
+                </span>
+              </div>
+            )}
+            {invoiceValues.insuranceAmount && (
+              <div>
+                <span className="block text-[10px] uppercase font-semibold text-gray-400">Insurance</span>
+                <span className="font-mono font-medium text-gray-800 dark:text-gray-200">
+                  +{invoice.currency} {Number(invoiceValues.insuranceAmount).toFixed(2)}
+                </span>
+              </div>
+            )}
+          </div>
+
+          <div className="text-right">
+            <span className="block text-[10px] uppercase font-bold tracking-wider text-gray-400">
+              Total Invoice Declared Value ({invoice.contractType || 'FOB'})
+            </span>
+            <span className="text-base font-bold text-gray-950 dark:text-white">
+              {invoice.currency} {invoiceTotal(invoice).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+            </span>
+          </div>
         </div>
       </CardContent>
     </Card>

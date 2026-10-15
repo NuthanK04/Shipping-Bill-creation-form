@@ -151,10 +151,51 @@ export function ShipmentBasicsTab({
               />
             </div>
           </div>
-          <p className="mt-3 text-xs text-gray-500">
-            Countries are derived from the port codes when saved: {portCountry(values.loadingPort) || '—'} →{' '}
-            {portCountry(values.finalDestinationPort) || '—'}.
-          </p>
+          {(values.loadingPort || values.finalDestinationPort) ? (
+            <div className="mt-4 flex flex-wrap items-center justify-between gap-3 rounded-xl border border-gray-200 bg-gray-50/80 p-3 text-xs dark:border-gray-800 dark:bg-gray-950">
+              <div className="flex items-center gap-2.5">
+                <div className="flex size-8 items-center justify-center rounded-lg border border-gray-200 bg-white font-bold text-gray-900 shadow-2xs dark:border-gray-700 dark:bg-gray-800 dark:text-white">
+                  ⚓
+                </div>
+                <div>
+                  <span className="text-[10px] font-semibold uppercase text-gray-400 tracking-wider">Loading Port</span>
+                  <p className="font-bold text-gray-950 dark:text-white">
+                    {values.loadingPort || 'Select Indian Port'}
+                    <span className="ml-1.5 rounded bg-gray-200/60 px-1 py-0.2 text-[10px] font-medium text-gray-700 dark:bg-gray-800 dark:text-gray-300">
+                      {portCountry(values.loadingPort) || 'IN'}
+                    </span>
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-2 text-gray-400">
+                <span className="text-gray-300 dark:text-gray-700">━━━━</span>
+                <span className="rounded-full border border-gray-200 bg-white px-2.5 py-0.5 text-[11px] font-medium text-gray-700 shadow-2xs dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300">
+                  🚢 Export Transit
+                </span>
+                <span className="text-gray-300 dark:text-gray-700">━━━━▶</span>
+              </div>
+
+              <div className="flex items-center gap-2.5 text-right">
+                <div>
+                  <span className="text-[10px] font-semibold uppercase text-gray-400 tracking-wider">Final Destination</span>
+                  <p className="font-bold text-gray-950 dark:text-white">
+                    {values.finalDestinationPort || 'Select Destination'}
+                    <span className="ml-1.5 rounded bg-gray-200/60 px-1 py-0.2 text-[10px] font-medium text-gray-700 dark:bg-gray-800 dark:text-gray-300">
+                      {portCountry(values.finalDestinationPort) || 'Global'}
+                    </span>
+                  </p>
+                </div>
+                <div className="flex size-8 items-center justify-center rounded-lg border border-gray-200 bg-white font-bold text-gray-900 shadow-2xs dark:border-gray-700 dark:bg-gray-800 dark:text-white">
+                  🏁
+                </div>
+              </div>
+            </div>
+          ) : (
+            <p className="mt-3 text-xs text-gray-400 dark:text-gray-500">
+              Select an Indian loading port and overseas destination port to verify customs exit route.
+            </p>
+          )}
         </div>
 
         <AdvancedSection title="Regulatory and route exceptions">

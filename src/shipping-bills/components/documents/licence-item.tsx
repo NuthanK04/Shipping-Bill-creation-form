@@ -17,10 +17,15 @@ export function LicenceItem({ formCtx, index, onRemove }: LicenceItemProps) {
   const basePath = `licenses.${index}` as const
 
   return (
-    <div className="rounded-lg border border-gray-200 p-4">
-      <div className="mb-3 flex justify-between">
-        <h3 className="text-sm font-semibold">Licence {index + 1}</h3>
-        <Button size="sm" variant="ghost" onClick={onRemove}>
+    <div className="rounded-xl border border-gray-200 bg-white p-4 shadow-2xs dark:border-gray-800 dark:bg-gray-950">
+      <div className="mb-3 flex items-center justify-between">
+        <div className="flex items-center gap-2">
+          <span className="flex size-6 items-center justify-center rounded-md bg-gray-100 text-xs dark:bg-gray-800">
+            📜
+          </span>
+          <h3 className="text-sm font-bold text-gray-950 dark:text-white">Scheme Licence {index + 1}</h3>
+        </div>
+        <Button size="sm" variant="ghost" className="h-7 px-2 text-xs text-red-600 hover:bg-red-50 hover:text-red-700 dark:hover:bg-red-950/50" onClick={onRemove}>
           Remove
         </Button>
       </div>

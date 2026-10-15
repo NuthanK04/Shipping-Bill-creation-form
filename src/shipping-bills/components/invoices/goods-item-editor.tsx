@@ -19,6 +19,7 @@ export interface GoodsItemEditorProps {
   currency: string
   canRemove: boolean
   onRemove: () => void
+  onDuplicate?: () => void
   onQuickAdd: (role: 'itemThirdParty', invoiceIndex: number, itemIndex: number) => void
   onAddBranch: (ownerId: number, branchName: BranchPath) => void
 }
@@ -31,6 +32,7 @@ export function GoodsItemEditor({
   currency,
   canRemove,
   onRemove,
+  onDuplicate,
   onQuickAdd,
   onAddBranch
 }: GoodsItemEditorProps) {
@@ -68,14 +70,26 @@ export function GoodsItemEditor({
   const basePath = `invoices.${invoiceIndex}.items.${itemIndex}` as const
 
   return (
-    <div className="rounded-lg border border-gray-200 p-4">
+    <div className="rounded-xl border border-gray-200 bg-white p-4 shadow-2xs dark:border-gray-800 dark:bg-gray-950">
       <div className="mb-3 flex items-center justify-between">
-        <h4 className="text-sm font-semibold">Item {itemIndex + 1}</h4>
-        {canRemove && (
-          <Button size="sm" variant="ghost" onClick={onRemove}>
-            Remove
-          </Button>
-        )}
+        <div className="flex items-center gap-2">
+          <h4 className="text-sm font-bold text-gray-950 dark:text-white">Item {itemIndex + 1}</h4>
+          <span className="rounded-md border border-gray-200 bg-gray-50 px-2 py-0.5 font-mono text-[11px] font-semibold text-gray-800 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200">
+            {currency || 'USD'} {lineTotal(item).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+          </span>
+        </div>
+        <div className="flex items-center gap-1.5">
+          {onDuplicate && (
+            <Button size="sm" variant="outline" className="h-7 px-2 text-xs" onClick={onDuplicate}>
+              Duplicate
+            </Button>
+          )}
+          {canRemove && (
+            <Button size="sm" variant="ghost" className="h-7 px-2 text-xs text-red-600 hover:bg-red-50 hover:text-red-700 dark:hover:bg-red-950/50" onClick={onRemove}>
+              Remove
+            </Button>
+          )}
+        </div>
       </div>
 
       <div className="mb-3 grid gap-4 sm:grid-cols-2 lg:grid-cols-6">

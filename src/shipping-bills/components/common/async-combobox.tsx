@@ -136,7 +136,7 @@ export function AsyncCombobox({
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               placeholder="Type to search..."
-              className="focus:border-primary-500 focus:ring-primary-500 w-full rounded border border-gray-200 px-2.5 py-1.5 text-sm outline-none focus:ring-1"
+              className="w-full rounded-md border border-gray-200 bg-gray-50/50 px-2.5 py-1.5 text-xs text-gray-900 transition-colors placeholder:text-gray-400 focus:border-gray-950 focus:bg-white focus:ring-1 focus:ring-gray-950 focus:outline-none dark:border-gray-700 dark:bg-gray-950 dark:text-white"
               autoFocus
             />
           </div>
@@ -189,11 +189,11 @@ function ComboboxOptionItem({
         setOpen(false)
       }}
       className={clsx(
-        'flex cursor-pointer flex-col rounded p-2 text-sm transition-colors',
-        isSelected ? 'bg-primary-50 text-primary-900 font-semibold' : 'text-gray-950 hover:bg-gray-100'
+        'flex cursor-pointer flex-col rounded-md p-2 text-xs transition-colors',
+        isSelected ? 'bg-gray-100 font-semibold text-gray-950 dark:bg-gray-800 dark:text-white' : 'text-gray-800 hover:bg-gray-50 dark:text-gray-200 dark:hover:bg-gray-800/60'
       )}>
       <span>{option.label}</span>
-      {option.sublabel && <span className="text-xs text-gray-500">{option.sublabel}</span>}
+      {option.sublabel && <span className="text-[11px] text-gray-500">{option.sublabel}</span>}
     </div>
   )
 }
